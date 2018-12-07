@@ -42,6 +42,7 @@ public class PlayMinesweeper{
             map.mapToString();
             if(map.win() == true){
                 System.out.println("MAP COMPLETED, YOU WIN!");
+                System.exit(0);
             }
         }
     }
