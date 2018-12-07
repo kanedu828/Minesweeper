@@ -1,0 +1,2 @@
+# Minesweeper
+Plays minesweeper!
