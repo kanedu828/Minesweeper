@@ -9,19 +9,23 @@
 *
 *By: Kane Du
 *
-*Last Edited: 12/7/2018
+*Last Edited: 12/8/2018
 *
-*Version: 1.0.0
-*
+*Version: 1.0.1
+*Change log:
+*Revealed squares can not be flagged.
+*Checks for valid inputs.
 *
 *
 ****************************************************************************/
-
+import java.util.InputMismatchException;
 import java.util.Scanner;
 public class PlayMinesweeper{
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
-        Map map = new Map(9, 9);
+        int row = 9;
+        int col = 9;
+        Map map = new Map(row, col);
         
         map.placeBombs();
 
@@ -29,10 +33,28 @@ public class PlayMinesweeper{
 
         while (true) {
             System.out.println("Coords:");
-            int userRow = input.nextInt();
-            int userCol = input.nextInt();
-            String userFlag = input.nextLine();
-
+            int userRow;
+            int userCol;
+            String userFlag;
+            try{
+                userRow = input.nextInt();
+                userCol = input.nextInt();
+                
+            }
+            catch(InputMismatchException ex){
+                System.out.println("Invalid input, please try again.");
+                input.next();
+                input.next();
+                input.nextLine();
+                continue;
+            }
+            userFlag = input.nextLine();
+           
+            if(userRow > row || userRow<1 || userCol<1 || userCol > col){
+                System.out.println("Invalid input, please try again.");
+                continue;
+            }
+            
             if(userFlag.equalsIgnoreCase(" flag") || userFlag.equalsIgnoreCase(" f")){
                 map.flag(userRow, userCol);
             }

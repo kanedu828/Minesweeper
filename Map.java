@@ -101,7 +101,10 @@ public class Map{
             map[row][col].setVisual("*");
         }
         else{
-            map[row][col].setVisual("F");
+            if(map[row][col].getVisual().equals("*")){
+                map[row][col].setVisual("F");
+            }
+            
         }
     }
     //-----------------------------------------
