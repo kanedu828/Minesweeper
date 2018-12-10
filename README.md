@@ -1,11 +1,12 @@
 # Minesweeper
+
 MinesweeperGUI.java
+**playMinesweeper is no longer functional.
 
 Executes and runs minesweeper.
 
 How to play:
 Left click to reveal, right click to flag.
-
 
 By: Kane Du
 
