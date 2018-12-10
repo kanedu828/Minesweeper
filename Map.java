@@ -3,6 +3,7 @@
 *
 *Represents entire minesweeper map that is used to play the game.
 *
+*Map(int r, int c) - Sets up map.
 *mapToString()- Shows the map visually
 *placeBombs()- Places bombs randomly on map 
 *flag(int row, int col)- Allows user to mark bombs
@@ -11,36 +12,58 @@
 ****************************************************************************/
 import java.util.Arrays;
 import java.util.Random;
+import javafx.scene.control.Button;
+import javafx.scene.input.InputEvent;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
+import java.lang.Object;
+import java.util.EventObject;
+import javafx.event.Event;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.*;
+import javafx.scene.*;
+import javafx.scene.layout.*;
+import javafx.scene.control.*;
+import javafx.geometry.*;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
+
 public class Map{
     private Random rand = new Random();
     private Square[][] map; //Should always be a square map.
+    private final static boolean TESTING_MODE = false;//TESTING MODE, SHOWS BOMB LOCATIONS
 
+    //-------------------------------------------------
+    //Map()- Creates empty map
+    //-------------------------------------------------
     public Map(){
         map = new Square[0][0];
     }
-
+    //-------------------------------------------------
+    //Map(int r, int c)- Creates map of row r and row c
+    //-------------------------------------------------
     public Map(int r, int c){
-        map = new Square[r+1][c+1];
-        int coord = 1; //To setString of coordanites for user accesability.
-
-        map[0][0] = new Square();
-        map[0][0].setVisual("-");
-
-        for(int row = 1; row<map.length; row++){
-            map[row][0] = new Square();
-            map[row][0].setVisual(Integer.toString(coord));
-            coord++;
-        }
-        coord = 1;
-        for(int col = 1; col<map[0].length; col++){
-            map[0][col] = new Square();
-            map[0][col].setVisual(Integer.toString(coord));
-            coord++;
-        }
-        for(int row = 1; row<map.length; row++){
-            for(int col = 1; col<map[0].length; col++){
+        map = new Square[r][c];
+        for(int row = 0; row<map.length; row++){
+            for(int col = 0; col<map[0].length; col++){
                 map[row][col] = new Square();
-                map[row][col].setVisual("*");
+                map[row][col].setVisual(" ");
+                int x = row;
+                int y = col;
+                map[row][col].getSquareButton().setOnMouseClicked(e->{
+                    if(e.getButton() == MouseButton.PRIMARY){
+                        revealArea(x, y);
+                    }
+                    if(e.getButton() == MouseButton.SECONDARY){
+                        flag(x, y);
+                        if(win() == true){
+                            System.out.println("WIN"); 
+                            endBox.end("Win", "YOU WIN!!!");
+                            System.exit(0);      
+                        }
+                    }
+                });
+                
 
             }
            
@@ -74,14 +97,13 @@ public class Map{
     //
     //---------------------------------------------
     public void placeBombs() {
-        boolean test = false;//TESTING LINE, SET TO TRUE FOR TESTING PURPOSES
         int indexBomb;
         int bombAmount = 2;
-        for (int row = 1; row < map.length; row++) {
+        for (int row = 0; row < map.length; row++) {
             for(int bombs = 0; bombs < bombAmount; bombs++){
-                indexBomb = rand.nextInt(map[0].length-1) + 1;
+                indexBomb = rand.nextInt(map[0].length-1);
                 map[row][indexBomb].setSafe(false);
-                if(test){
+                if(TESTING_MODE){
                     map[row][indexBomb].setVisual("B");
                 }
         
@@ -98,10 +120,10 @@ public class Map{
     //--------------------------------------
     public void flag(int row, int col){
         if(map[row][col].getVisual().equals("F")){
-            map[row][col].setVisual("*");
+            map[row][col].setVisual(" ");
         }
         else{
-            if(map[row][col].getVisual().equals("*")){
+            if(map[row][col].getVisual().equals(" ")){
                 map[row][col].setVisual("F");
             }
             
@@ -128,38 +150,38 @@ public class Map{
     private void detectBombs(int row, int col){
         int bombCount = 0; //Amount of bombs nearby
         //Check up
-        if((row-1 > 0) && row<map.length && col<map[0].length && col>0 && map[row-1][col].getSafe() == false){
+        if((row-1 >= 0) && row<map.length && col<map[0].length && col>=0 && map[row-1][col].getSafe() == false){
             bombCount++;
         }
         //Check down
-        if((row+1 < map.length) && row>0&& col<map[0].length && col>0 && map[row+1][col].getSafe() == false){
+        if((row+1 < map.length) && row>=0&& col<map[0].length && col>=0 && map[row+1][col].getSafe() == false){
             bombCount++;
         }
         //Check right
-        if((col+1 < map[0].length) && col>0 && row<map.length && row>0 && map[row][col+1].getSafe() == false){
+        if((col+1 < map[0].length) && col>=0 && row<map.length && row>=0 && map[row][col+1].getSafe() == false){
             bombCount++;
         }
         //Check left
-        if((col-1 > 0) && col<map[0].length && row<map.length && row>0 && map[row][col-1].getSafe() == false){
+        if((col-1 >= 0) && col<map[0].length && row<map.length && row>=0 && map[row][col-1].getSafe() == false){
             bombCount++;
         }
         //Check up right
-        if((row-1 > 0) && row<map.length && (col+1 < map[0].length) && col>0 && map[row-1][col+1].getSafe() == false){
+        if((row-1 >= 0) && row<map.length && (col+1 < map[0].length) && col>=0 && map[row-1][col+1].getSafe() == false){
             bombCount++;
         }
         //Check up left
-        if((row-1 > 0) && row<map.length && (col-1 > 0) && col<map[0].length&& map[row-1][col-1].getSafe() == false){
+        if((row-1 >= 0) && row<map.length && (col-1 >= 0) && col<map[0].length&& map[row-1][col-1].getSafe() == false){
             bombCount++;
         }
         //Check down left
-        if((row+1 < map.length) && row>0 && (col-1 > 0)&& col<map[0].length && map[row+1][col-1].getSafe() == false){
+        if((row+1 < map.length) && row>=0 && (col-1 >= 0)&& col<map[0].length && map[row+1][col-1].getSafe() == false){
             bombCount++;
         }
         //check down right
-        if((row+1 < map.length) && row>0 && (col+1 < map[0].length)&& col>0 && map[row+1][col+1].getSafe() == false){
+        if((row+1 < map.length) && row>=0 && (col+1 < map[0].length)&& col>=0 && map[row+1][col+1].getSafe() == false){
             bombCount++;
         }
-        if(row>0 && col>0 && row<map.length && col<map[0].length){
+        if(row>=0 && col>=0 && row<map.length && col<map[0].length && !map[row][col].getVisual().equals("F") && map[row][col].getSafe() == true){
             map[row][col].setVisual(Integer.toString(bombCount));
         }
         
@@ -171,12 +193,13 @@ public class Map{
     //-------------------------------------------
     //revealArea(int row, int col)- Reveals a square
     //and also reveals squares around squares with 0
-    //bombs.
+    //bombs. Helper class for Map(int r, int c)
     //
     //-------------------------------------------
-    public void revealArea(int row, int col) {
+    private void revealArea(int row, int col) {
         if(this.isExplode(row, col) == true){
             System.out.println("BOOOOM!\nYOU LOSE!");
+            endBox.end("Lose", "BOOOOM! YOU LOSE!!!");
             System.exit(0);
         }
         this.detectBombs(row, col);
@@ -208,7 +231,7 @@ public class Map{
     public boolean win(){
         for(int row = 0; row<map.length; row++){
             for(int col = 0; col<map[0].length; col++){
-                if(map[row][col].getSafe() == false && (map[row][col].getVisual().equals("*") || map[row][col].getVisual().equals("B"))){
+                if(map[row][col].getSafe() == false && (map[row][col].getVisual().equals(" ") || map[row][col].getVisual().equals("B"))){
                     return false;
                 }
                 if(map[row][col].getSafe() == true && map[row][col].getVisual().equals("F")){
