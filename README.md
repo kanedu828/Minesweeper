@@ -10,14 +10,19 @@ Left click to reveal, right click to flag.
 
 By: Kane Du
 
-Last Edited: 12/9/2018
+# Version: 2.0.1
 
-Version: 2.0.0
 
-2.0.0 Change log:
+## 2.0.1 Change log:
+Added square consistency.
+Organization of files.
+Difficulty options implemented.
+
+## 2.0.0 Change log:
+
+
 Added GUI.
 
-
-1.0.1 Change log:
-Revealed squares can not be flagged.
+## 1.0.1 Change log:
+Revealed squares cannot be flagged.
 Checks for valid inputs.
