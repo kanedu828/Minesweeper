@@ -1,23 +1,19 @@
-package minesweeper.gui; /*******************************************************************************************
-*minesweeper.gui.endBox.java- Alerts user that they won or lost.
-*
-*
-*
-*
-*
-*
-*
-*
-*********************************************************************************************/
-
+package minesweeper.gui;
 import javafx.stage.*;
 import javafx.scene.*;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
 import javafx.geometry.*;
 
-public class endBox{
-
+/**
+ * This class represents the endscreen for when the player wins.
+ */
+public class EndBox{
+    /**
+     * Shows the endscreen.
+     * @param title title of the screen
+     * @param message message of the screen.
+     */
     public static void end(String title, String message){
         Stage window = new Stage();
 

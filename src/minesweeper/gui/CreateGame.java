@@ -17,12 +17,19 @@ import minesweeper.game.Map;
 import java.io.FileNotFoundException;
 import java.lang.Integer;
 
+/**
+ * I dont know. class aint being used.
+ */
 public class CreateGame{
 
     private static Stage window;
     private static Button squareButton;
-    
 
+    /**
+     * No clue, class aint being used.
+     * @param difficulty difficulty
+     * @throws FileNotFoundException if a file cant be found.
+     */
     public static void createGame(int difficulty) throws FileNotFoundException {
         GridPane mapGrid = new GridPane(); //Creates map
         Scene game = new Scene(mapGrid);

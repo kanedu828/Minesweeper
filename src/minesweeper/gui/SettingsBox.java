@@ -1,17 +1,4 @@
 package minesweeper.gui;
-/*******************************************************************************************
-*
-*
-*
-*
-*
-*
-*
-*
-*
-*********************************************************************************************/
-
-
 import org.w3c.dom.Text;
 
 import javafx.application.Application;
@@ -28,9 +15,15 @@ import javafx.scene.layout.*;
 import javafx.scene.control.*;
 import javafx.geometry.*;
 
+/**
+ * This class shows the settings screen for the user to customize the game.
+ */
 public class SettingsBox{
- 
 
+    /**
+     * Player customizes the game.
+     * @return I dont know, this class isnt even being used as of now.
+     */
     public static int settings(){
         Stage window = new Stage();
 

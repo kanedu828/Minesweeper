@@ -1,36 +1,4 @@
 package minesweeper.gui;
-/*****************************************************************
-minesweeper.gui.MinesweeperGUI.java
-
-Executes and runs minesweeper.
-
-How to play:
-Left click to reveal, right click to flag.
-
-
-By: Kane Du
-
-Last Edited: 1/19/2018
-
-Version: 2.0.1
-
-
- 2.0.1 Change log:
- Added square consistency.
- Organization of files.
- Difficulty options implemented.
-
-2.0.0 Change log:
-Added GUI.
-
-
-1.0.1 Change log:
-Revealed squares can not be flagged.
-Checks for valid inputs.
-
-
-****************************************************************************/
-
 import javafx.application.Application;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
@@ -47,6 +15,13 @@ import minesweeper.game.Map;
 
 import java.lang.Integer;
 
+/**
+ * Driver class for a game of minesweeper.
+ *
+ * Author: Kane Du
+ *
+ * Last Edited: 3/17/19
+ */
 public class MinesweeperGUI extends Application{
 
     Stage window;
@@ -56,15 +31,22 @@ public class MinesweeperGUI extends Application{
     static int length = 10;
     int difficulty = 1;
     //10x10, 16x16, 22x22
-    
-    
+
+    /**
+     * Launches javafx application
+     * @param args Command line input
+     */
     public static void main(String[] args) {
         //System.out.println("Width: ");
-
         launch(args);
         
     }
 
+    /**
+     * Sets uo javafx application.
+     * @param primaryStage
+     * @throws Exception
+     */
     @Override
     public void start(Stage primaryStage) throws Exception {
         window = primaryStage;
@@ -78,7 +60,7 @@ public class MinesweeperGUI extends Application{
         Map map = new Map(width, length);
 
         //Set up bombs
-        map.placeBombs(2);
+        map.placeBombs(1);
 
         //Set square buttons to grid
         for(int row = 0; row< width; row++){
